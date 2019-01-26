@@ -6,9 +6,8 @@
         <title>NBA Giftastic</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="assets/style.css">
-        <link rel="stylesheet" href="assets/gif.js">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script type="text/javascript"></script>
+        <link href="https://fonts.googleapis.com/css?family=Play" rel="stylesheet">
+        <!-- <link rel="stylesheet" href="assets/gif.js"> --> -->
         
 </head>
 <body>
@@ -26,15 +25,126 @@
       <input type="text" id="nba-input"><br>
 
       <!-- Button triggers new team to be added -->
-      <input id="add-team" type="submit" value="Add a Team!">
+      <input id="add-team" type="submit" value="Add a Team!" style="font-family: 'Play', sans-serif; font-size: 24px">
     </form>
-
+<br>
      <!-- Rendered Buttons will get Dumped Here  -->
      <div id="buttons-view"></div>
 
 <br>
 
-<div id="gifs-appear-here">
+<div id="gifs-appear-here"></div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript">
+//initial array of NBA teams
+var teams = [
+"Boston Celtics",
+"Dallas Mavericks", 
+"Denver Nuggets", 
+"Detroit Pistons", 
+"Golden State Warriors", 
+"Houston Rockets", 
+"Los Angeles Lakers",
+"Miami Heat", 
+"Milwaukee Bucks",
+"Minnesota Timberwolves", 
+"New Orleans Pelicans", 
+"Oklahoma City Thunder", 
+"Philadelphia 76ers", 
+"Portland Trail Blazers", 
+"Sacramento Kings", 
+"Toronto Raptors", 
+"Utah Jazz", 
+];
+
+//function to capture movie name from the data-attribute
+function alertNBATeam() {
+    const nbaTeam = $(this).attr("data-name"); 
+
+}
+
+//function to display NBA data
+function renderButtons () {
+
+//deletes the teams prior to adding new teams
+    $("#buttons-view").empty();
+//for loop through the array of teams
+for (var i = 0; i < teams.length; i++) {
+    //generates button for each team in the array
+    var nba = $("<button>"); 
+    //adds class of team to the button
+    nba.addClass("team");
+    //adds a data-attr
+    nba.attr("data-name", teams[i]); 
+    //shows the text of the button
+    nba.text(teams[i]);
+    //adds the button to the html
+    $("#buttons-view").append(nba); 
+    }
+
+}
+
+$('#add-team').on("click", function(addnbaTeam) {
+
+   addnbaTeam.preventDefault(); 
+
+    var team = $('#nba-input').val().trim();
+
+    teams.push(team);
+
+    renderButtons();
+});
+
+$(document).on("click", ".team", alertNBATeam); 
+
+renderButtons();
+
+$("#buttons-view").on("click", function() {
+
+    var nbaTeams = $(this).attr("data-names");
+    
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + 
+    nbaTeams + "RhG6by0lHfUxCByhgxk7xwIcVmv2qxvi;"
+
+$.ajax({
+    url: queryURL,
+    method: "GET"
+})
+
+    .then(function(response) {
+        var results = response.data
+
+        for (var i = 0; i < results.length; i++) {
+            var teamDiv = $("<div>"); 
+
+            var x = $("<p>").text("Rating: " + results[i].rating); 
+
+            var teamImage = $("<img>"); 
+
+            teamImage.attr("src", results[i].images.fixed_height.url); 
+
+            teamDiv.append(x);
+            teamDiv.append(teamImage);
+        }
+    });
+
+});
+
+//click even to pause the giphys
+// $(".gif").on("click", function () {
+
+//     var state = $(this).attr("data-state")
+
+//     if (state === "still") {
+//         $(this).attr("src", $(this).attr("data-animate"));
+//         $(this).attr("data-state", "animate");
+//     } else {
+//         $(this).attr("src", $(this).attr("data-still"));
+//         $(this).attr("data-state", "still");
+//     }
+// });
+</script>
 
 </body>
 </html>
