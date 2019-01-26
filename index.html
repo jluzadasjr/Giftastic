@@ -7,14 +7,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="assets/style.css">
         <link href="https://fonts.googleapis.com/css?family=Play" rel="stylesheet">
-        <!-- <link rel="stylesheet" href="assets/gif.js"> --> -->
+        <!-- <link rel="stylesheet" href="assets/gif.js"> --> 
         
 </head>
 <body>
 
 <div class="container">
     <h1 style="text-align:center">NBA Giphy Time!</h1>
-    <img src="images/nba.gif" alt="NBA Logo" style="align-content: center">
+    <img id="nbasymbol" src="images/nba.gif" alt="NBA Logo" style="align-content: center">
 </div>
 <br>
     <!-- teams will populate here -->
@@ -33,7 +33,7 @@
 
 <br>
 
-<div id="gifs-appear-here"></div>
+<div class="gifs-appear-here"></div>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script type="text/javascript">
@@ -58,9 +58,9 @@ var teams = [
 "Utah Jazz", 
 ];
 
-//function to capture movie name from the data-attribute
+//function to capture nba teams name from the data-attribute
 function alertNBATeam() {
-    const nbaTeam = $(this).attr("data-name"); 
+    var nbaTeam = $(this).attr("data-name"); 
 
 }
 
@@ -84,13 +84,14 @@ for (var i = 0; i < teams.length; i++) {
     }
 
 }
-
+//click event to add an NBA team
 $('#add-team').on("click", function(addnbaTeam) {
 
    addnbaTeam.preventDefault(); 
 
     var team = $('#nba-input').val().trim();
 
+    
     teams.push(team);
 
     renderButtons();
@@ -100,12 +101,16 @@ $(document).on("click", ".team", alertNBATeam);
 
 renderButtons();
 
-$("#buttons-view").on("click", function() {
+//button to pull the giphy
+$("#buttons-view").on("click", ".team", function() {
 
-    var nbaTeams = $(this).attr("data-names");
     
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + 
-    nbaTeams + "RhG6by0lHfUxCByhgxk7xwIcVmv2qxvi;"
+    var nbaTeams = $(this).attr("data-name");
+    console.log('this', $(this));
+    
+    var queryURL = "https://cors-anywhere.herokuapp.com/https://api.giphy.com/v1/gifs/search?q=" + 
+    encodeURIComponent(nbaTeams) + "&api_key=RhG6by0lHfUxCByhgxk7xwIcVmv2qxvi&limit=10";
+    console.log(queryURL);
 
 $.ajax({
     url: queryURL,
@@ -114,11 +119,11 @@ $.ajax({
 
     .then(function(response) {
         var results = response.data
-
+        console.log('results', results);
         for (var i = 0; i < results.length; i++) {
-            var teamDiv = $("<div>"); 
+            var teamDiv = $("<span>"); 
 
-            var x = $("<p>").text("Rating: " + results[i].rating); 
+            var x = $("<span>").text("Rating: " + results[i].rating); 
 
             var teamImage = $("<img>"); 
 
@@ -126,24 +131,28 @@ $.ajax({
 
             teamDiv.append(x);
             teamDiv.append(teamImage);
+            $(".gifs-appear-here").append(teamDiv);
         }
     });
+    
+//click to pause the giphys
+function changeState(){
+	var state = $(this).attr("data-state");
+	var animateGif = $(this).attr("data-animate");
+	var stillGif = $(this).attr("data-still");
 
+	if (state == "still") {
+		$(this).attr("src", animateGif);
+		$(this).attr("data-state", "animate");
+	}
+        else if (state == "animate") {
+	        $(this).attr("src", stillGif);
+			$(this).attr("data-state", "still");
+		}
+	}
+$(document).on("click", ".gifs-appear-here", changeState);
 });
 
-//click even to pause the giphys
-// $(".gif").on("click", function () {
-
-//     var state = $(this).attr("data-state")
-
-//     if (state === "still") {
-//         $(this).attr("src", $(this).attr("data-animate"));
-//         $(this).attr("data-state", "animate");
-//     } else {
-//         $(this).attr("src", $(this).attr("data-still"));
-//         $(this).attr("data-state", "still");
-//     }
-// });
 </script>
 
 </body>

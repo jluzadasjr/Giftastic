@@ -1,4 +1,4 @@
-img {
+#nbasymbol {
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -7,6 +7,9 @@ img {
 body {
     background: url("../images/nbawallpaper.jpg");
     background-repeat: no-repeat;
+    background-attachment: fixed;
+    /* background-position: center; */
+    background-size: cover;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -25,4 +28,9 @@ form {
 h1 {
     font-family: 'Play', sans-serif;
     font-size: 50px;
+}
+
+span {
+    font-family: 'Play', sans-serif;
+    font-size: 24px;
 }
