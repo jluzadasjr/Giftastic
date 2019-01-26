@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"></html>
+
+<head>
+        <meta charset="utf-8">
+        <title>NBA Giftastic</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="assets/style.css">
+        <link rel="stylesheet" href="assets/gif.js">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript"></script>
+        
+</head>
+<body>
+
+<div class="container">
+    <h1 style="text-align:center">NBA Giphy Time!</h1>
+    <img src="images/nba.gif" alt="NBA Logo" style="align-content: center">
+</div>
+<br>
+    <!-- teams will populate here -->
+    <div id="nba-view"></div>
+
+    <form id="nba-form" style="text-align:center">
+      <label for="nba-input">Add an NBA Team</label>
+      <input type="text" id="nba-input"><br>
+
+      <!-- Button triggers new team to be added -->
+      <input id="add-team" type="submit" value="Add a Team!">
+    </form>
+
+     <!-- Rendered Buttons will get Dumped Here  -->
+     <div id="buttons-view"></div>
+
+<br>
+
+<div id="gifs-appear-here">
+
+</body>
+</html>
