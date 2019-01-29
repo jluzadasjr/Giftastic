@@ -25,12 +25,20 @@ form {
     font-size: 24px;
 }
 
+
 h1 {
     font-family: 'Play', sans-serif;
-    font-size: 50px;
+    font-size: 75px;
+}
+
+
+
+h3 {
+    font-size: 30px;
 }
 
 span {
     font-family: 'Play', sans-serif;
     font-size: 24px;
 }
+

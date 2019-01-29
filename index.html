@@ -13,7 +13,7 @@
 <body>
 
 <div class="container">
-    <h1 style="text-align:center">NBA Giphy Time!</h1>
+    <h1 style="text-align:center; font-weight:bold">NBA Giphy Time!</h1>
     <img id="nbasymbol" src="images/nba.gif" alt="NBA Logo" style="align-content: center">
 </div>
 <br>
@@ -34,6 +34,9 @@
 <br>
 
 <div class="gifs-appear-here"></div>
+<!-- <div src="https://cors-anywhere.herokuapp.com/https://api.giphy.com/v1/gifs/search?q=" data-still="https://cors-anywhere.herokuapp.com/https://api.giphy.com/v1/gifs/search?q= data-animate=" data-animate="https://cors-anywhere.herokuapp.com/https://api.giphy.com/v1/gifs/search?q=" data-state="still"  class="gifs-appear-here"></div> -->
+
+
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script type="text/javascript">
@@ -125,7 +128,7 @@ $.ajax({
 
             var x = $("<span>").text("Rating: " + results[i].rating); 
 
-            var teamImage = $("<img>"); 
+            var teamImage = $("<img>").addClass("gif"); 
 
             teamImage.attr("src", results[i].images.fixed_height.url); 
 
@@ -136,7 +139,8 @@ $.ajax({
     });
     
 //click to pause the giphys
-function changeState(){
+$(".gif").on("click", changeState); {
+    function changeState(){
 	var state = $(this).attr("data-state");
 	var animateGif = $(this).attr("data-animate");
 	var stillGif = $(this).attr("data-still");
@@ -150,8 +154,10 @@ function changeState(){
 			$(this).attr("data-state", "still");
 		}
 	}
-$(document).on("click", ".gifs-appear-here", changeState);
+}
+// console.log((document).on("click", ".gif", changeState))
 });
+
 
 </script>
 
