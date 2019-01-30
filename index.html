@@ -130,22 +130,25 @@ $.ajax({
 
             var teamImage = $("<img>").addClass("gif"); 
 
-            teamImage.attr("src", results[i].images.fixed_height.url); 
+            teamImage.attr("src", results[i].images.fixed_height_still.url); 
+            teamImage.attr('data-still', results[i].images.fixed_height_still.url);
+            teamImage.attr('data-animate', results[i].images.fixed_height.url);
+            teamImage.attr('data-state', 'still');
 
             teamDiv.append(x);
             teamDiv.append(teamImage);
             $(".gifs-appear-here").append(teamDiv);
         }
     });
+});
     
 //click to pause the giphys
-$(".gif").on("click", changeState); {
-    function changeState(){
+$(".gifs-appear-here").on("click", ".gif", function() {
 	var state = $(this).attr("data-state");
 	var animateGif = $(this).attr("data-animate");
 	var stillGif = $(this).attr("data-still");
 
-	if (state == "still") {
+	if (state === "still") {
 		$(this).attr("src", animateGif);
 		$(this).attr("data-state", "animate");
 	}
@@ -154,9 +157,8 @@ $(".gif").on("click", changeState); {
 			$(this).attr("data-state", "still");
 		}
 	}
-}
 // console.log((document).on("click", ".gif", changeState))
-});
+);
 
 
 </script>
